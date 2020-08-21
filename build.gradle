@@ -1,10 +1,25 @@
+buildscript {
+	dependencies {
+		classpath "io.spring.gradle:dependency-management-plugin:1.0.9.RELEASE"
+	}
+}
 plugins {
 	id 'org.springframework.boot' version '2.3.1.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
 }
 
+apply plugin: "io.spring.dependency-management"
+
+dependencyManagement {
+	imports {
+		mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Greenwich.SR6'
+	}
+}
+
+
 group = 'com.example'
+sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
@@ -13,10 +28,12 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 }
+
 test {
 	useJUnitPlatform()
 }
