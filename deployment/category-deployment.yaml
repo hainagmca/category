@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: category
+    servicefor: category
+  name: category
+  namespace: [student-name]
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: category
+      servicefor: category
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: category
+        servicefor: category
+    spec:
+      containers:
+      - image: [docker-username]/category:[tag]
+        imagePullPolicy: Always
+        name: category
+        ports:
+          - containerPort: 8080
+        env:
+          - name: SPRING_DATA_MONGODB_URI
+            value: mongodb://mongo:27017/dev
